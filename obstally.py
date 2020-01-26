@@ -10,6 +10,7 @@
 
 import sys
 import time
+import xml.etree.ElementTree as ET
 
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
@@ -21,70 +22,124 @@ logging.basicConfig(level=logging.INFO)
 
 
 sys.path.append('../')
-from obswebsocket import obsws, events
+from obswebsocket import obsws, events, requests
 
-host = "192.168.178.68"
-port = 4444
-password = "howky"
+from gpiozero import LED
+
+tree = ET.parse('tally.xml')
+root = tree.getroot()
+host = root[0].text
+port = root[1].text
+password  = root[2].text
 
 #
 # Scene Config
 #
-
-scene1 = "HDMI1"
-scene2 = "HDMI2"
-scene3 = "HDMI3"
-scene4 = "HDMI4"
-scene5 = "Desktop+HDMI1"
-scene6 = "Desktop+HDMI2"
-scene7 = "Desktop+HDMI3"
-scene8 = "Desktop+HDMI4"
+scene1 = root[3].text
+scene2 = root[4].text
+scene3 = root[5].text
+scene4 = root[6].text
 
 #
 # Configure Tallys
 #
+pv_tally_1 = LED(root[7].text)
+pgm_tally_1 = LED(root[8].text)
+pv_tally_2 = LED(root[9].text)
+pgm_tally_2 = LED(root[10].text)
+pv_tally_3 = LED(root[11].text)
+pgm_tally_3 = LED(root[12].text)
+pv_tally_4 = LED(root[13].text)
+pgm_tally_4 = LED(root[14].text)
 
-GPIO.setup(18, GPIO.OUT)
-GPIO.setup(23, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(25, GPIO.OUT)
 
 def on_switch(message):
     obsscene = message.getSceneName()
     if obsscene == scene1:
        print ("Kamera 1 aktiv")
-       GPIO.output(18, GPIO.HIGH)
-       GPIO.output(23, GPIO.LOW)
-       GPIO.output(24, GPIO.LOW)
-       GPIO.output(25, GPIO.LOW)
+       pgm_tally_1_on()
     elif obsscene == scene2:
       print ("Kamera 2 aktiv")
-      GPIO.output(18, GPIO.LOW)
-      GPIO.output(23, GPIO.HIGH)
-      GPIO.output(24, GPIO.LOW)
-      GPIO.output(25, GPIO.LOW)
+      pgm_tally_2_on()
     elif obsscene == scene3:
      print ("Kamera 3 aktiv")
-     GPIO.output(18, GPIO.LOW)
-     GPIO.output(23, GPIO.LOW)
-     GPIO.output(24, GPIO.HIGH)
-     GPIO.output(25, GPIO.LOW)
+     pgm_tally_3_on()
     elif obsscene == scene4:
      print ("Kamera 4 aktiv")
-     GPIO.output(18, GPIO.LOW)
-     GPIO.output(23, GPIO.LOW)
-     GPIO.output(24, GPIO.LOW)
-     GPIO.output(25, GPIO.HIGH)
+     pgm_tally_4_on()
     else:
      print ("Szene ohne Tally:")
      print (obsscene)
-     GPIO.output(18, GPIO.LOW)
-     GPIO.output(23, GPIO.LOW)
-     GPIO.output(24, GPIO.LOW)
-     GPIO.output(25, GPIO.LOW)
+
+def on_preview(message):
+    pv_scene = message.getSceneName()
+    if pv_scene == scene1:
+       print ("Kamera 1 Preview")
+       pv_tally_1_on()
+    elif pv_scene == scene2:
+      print ("Kamera 2 Preview")
+      pv_tally_2_on()
+    elif pv_scene == scene3:
+     print ("Kamera 3 Preview")
+     pv_tally_3_on()
+    elif pv_scene == scene4:
+     print ("Kamera 4 Preview")
+     pv_tally_4_on()
+    else:
+     print ("Szene ohne Tally:")
+     print (pv_scene)
+
+def pv_tally_1_on():
+   pv_tally_1.on()
+   pv_tally_2.off()
+   pv_tally_3.off()
+   pv_tally_4.off()
+
+def pgm_tally_1_on():
+   pgm_tally_1.on()
+   pgm_tally_2.off()
+   pgm_tally_3.off()
+   pgm_tally_4.off()
+
+def pv_tally_2_on():
+   pv_tally_1.off()
+   pv_tally_2.on()
+   pv_tally_3.off()
+   pv_tally_4.off()
+
+def pgm_tally_2_on():
+   pgm_tally_1.off()
+   pgm_tally_2.on()
+   pgm_tally_3.off()
+   pgm_tally_4.off()
+
+def pv_tally_3_on():
+   pv_tally_1.off()
+   pv_tally_2.off()
+   pv_tally_3.on()
+   pv_tally_4.off()
+
+def pgm_tally_3_on():
+   pgm_tally_1.off()
+   pgm_tally_2.off()
+   pgm_tally_3.on()
+   pgm_tally_4.off()
+
+def pv_tally_4_on():
+   pv_tally_1.off()
+   pv_tally_2.off()
+   pv_tally_3.off()
+   pv_tally_4.on()
+
+def pgm_tally_4_on():
+   pgm_tally_1.off()
+   pgm_tally_2.off()
+   pgm_tally_3.off()
+   pgm_tally_4.on()
 
 ws = obsws(host, port, password)
 ws.register(on_switch, events.SwitchScenes)
+ws.register(on_preview, events.PreviewSceneChanged)
 ws.connect()
 
 try:
