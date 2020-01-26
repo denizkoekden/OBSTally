@@ -2,18 +2,25 @@
 OBS Tallylights via OBS-Websockets and RPI
 
 ### THIS IS EXPERIMENTAL AND QUICK AND DIRTY
-BUT IT WORKS.
+* But it works really good
 
 ### Installation
 * Run pip install obs-websocket to install the obs-websocket Library
 
-* Define Scene Names in Scene Configuration, to match OBS-Names
+* Install and Setup NGINX and PHP-Server
 
-* Setup OBS-Websocket Settings (IP, Password and Port)
+* Put index.php in /var/www/html/
 
-* Modify elif-loop to match your setup
+* In index.php change tally.xml-path to match the actual path
 
-* Connect LEDs to the matching GPIO-Pinouts and try
+* Run index.php from Browser
+
+* Setup OBS-Tally Settings (IP, Password, Port from OBS-Websockets, Scenes and GPIO-Ports)
+
+* Connect LEDs to the matching GPIO and try
 
 ### Contribution
-If you are better in Python than me, you can push them.
+I am:
+* Pyton noob
+* PHP noob
+But it works. If you can improve some of my code, then feel free to push some.
