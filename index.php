@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <?php
+
+//Set your tally.xml-Location
+
+$Tally_Config = '/home/pi/OBSTally/tally.xml';
+
+
+/* You dont need to change anything below here */
+
 if(isset($_POST['save'])) 
 {
-	$data=simplexml_load_file('tally.xml');
+	$data=simplexml_load_file($Tally_Config);
 	$data->host=$_POST['host'];
 	$data->port=$_POST['port'];
 	$data->pass=$_POST['pass'];
@@ -18,12 +26,12 @@ if(isset($_POST['save']))
         $data->pgm_tally_3=$_POST['pgm_tally_3'];
 	$data->pv_tally_4=$_POST['pv_tally_4'];
         $data->pgm_tally_4=$_POST['pgm_tally_4'];
-	$handle=fopen("tally.xml","wb");
+	$handle=fopen($Tally_Config,"wb");
 	fwrite($handle,$data->asXML());
 	fclose($handle);
 }
 
-$data=simplexml_load_file('tally.xml');
+$data=simplexml_load_file($Tally_Config);
 $host=$data->host;
 $port=$data->port;
 $pass=$data->pass;
@@ -45,14 +53,20 @@ $pgm_tally_4=$data->pgm_tally_4;
 /* form elements */
 label {
     display: block;
-    float: left;
+    float: center;
     width: 50px;
 }
 </style>
-<title>OBSTally Config</title>
+<title> OBS Tally Config </title>
 </head>
 <body>
 <form method="post">
+	<div style='text-align:left;display:inline-block;min-width:340px;'><div style='text-align:center;'>
+	<noscript>To use OBSTally, please enable JavaScript<br></noscript>
+	<h1>OBS-Tally Config</h1>
+	<a>Type in your OBS-Websocket Credentials, your trigger Scenes and the GPIOs your LEDs are connected to.</a></p></div>
+	<fieldset>
+	<legend>OBS-Websocket Credentials </legend>
 	<label for="host">Host:</label>
     <textarea rows="1" cols="20" name="host" ><?php echo $host ?></textarea>
     <br>
@@ -62,6 +76,9 @@ label {
 	<label for="pass">Pass:</label>
     <textarea rows="1" cols="20" name="pass" placeholder="*********"></textarea>
     <br>
+	</fieldset>
+	<fieldset>
+	<legend> OBS Trigger Scene Configuration</legend>
 	<label for="scene1">Scene1:</label>
 	<textarea rows="1" cols="20" name="scene1"><?php echo $scene1 ?></textarea>
     <br>
@@ -74,6 +91,9 @@ label {
         <label for="scene4">Scene4:</label>
         <textarea rows="1" cols="20" name="scene4"><?php echo $scene4 ?></textarea>
     <br>
+	</fieldset>
+	<fieldset>
+	<legend> Define LED GPIOs as PI-GPIO-Numbers (NOT Pin-Number)</legend>
         <label for="pv_tally_1">Preview Tally 1 GPIO:</label>
         <textarea rows="1" cols="20" name="pv_tally_1"><?php echo $pv_tally_1 ?></textarea>
     <br>
@@ -98,7 +118,9 @@ label {
         <label for="pgm_tally_4">Program Tally 4 GPIO:</label>
         <textarea rows="1" cols="20" name="pgm_tally_4"><?php echo $pgm_tally_4 ?></textarea>
     <br>
-    <input type="submit" name="save" value="Save">
-	<br><br><br>
-</form>
+	</fieldset>
+    </p>
+	<input type="submit" name="save" value="Save">
+</form></p>
+<div style='text-align:right;font-size:11px;'><a href='https://github.com/denizkoekden' target='_blank'>(c) 2020 -  OBSTally by Deniz K.</a></div></div>
 </body>
