@@ -3,12 +3,12 @@
 
 //Set your tally.xml-Location
 
-$Tally_Config = '/home/pi/OBSTally/tally.xml';
+$Tally_Config = '/opt//OBSTally/tally.xml';
 
 
 /* You dont need to change anything below here */
 
-if(isset($_POST['save'])) 
+if(isset($_POST['save']))
 {
 	$data=simplexml_load_file($Tally_Config);
 	$data->host=$_POST['host'];
@@ -48,6 +48,7 @@ $pgm_tally_3=$data->pgm_tally_3;
 $pv_tally_4=$data->pv_tally_4;
 $pgm_tally_4=$data->pgm_tally_4;
 ?>
+
 <head>
 <style type='text/css'>
 /* form elements */
@@ -121,6 +122,8 @@ label {
 	</fieldset>
     </p>
 	<input type="submit" name="save" value="Save">
-</form></p>
+</form>
+
+</p>
 <div style='text-align:right;font-size:11px;'><a href='https://github.com/denizkoekden' target='_blank'>(c) 2020 -  OBSTally by Deniz K.</a></div></div>
 </body>

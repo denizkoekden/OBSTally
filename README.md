@@ -19,6 +19,8 @@ OBS Tallylights via OBS-Websockets and RPI
 
 * Connect LEDs to the matching GPIO and try
 
+* If you want to use OBSTally with an relais-card, you need to use the Inverted-Version
+
 ### Contribution
 I am:
 * Pyton noob

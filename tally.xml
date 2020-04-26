@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <data>
 	<!-- OBS Websocket based TallyLights - Configuration -->
-	<host>127.0.0.1</host> <!-- OBS Websocket Host -->
+	<host>192.168.178.21</host> <!-- OBS Websocket Host -->
 	<port>4444</port> <!-- OBS Websocket Port -->
-	<pass>password</pass> <!-- OBS Websocket Password -->
-	<scene1>Scene1</scene1> <!-- Scene-Name for Tally 1 -->
-	<scene2>Scene2</scene2> <!-- Scene-Name for Tally 2 -->
-	<scene3>Scene3</scene3> <!-- Scene-Name for Tally 3 -->
-	<scene4>Scene4</scene4> <!-- Scene-Name for Tally 4 -->
-        <pv_tally_1>2</pv_tally_1> <!-- Define PV LED 1 as GPIO 2 -->
-	<pgm_tally_1>3</pgm_tally_1> <!-- Define PGM LED 1 as GPIO 3 -->
-        <pv_tally_2>4</pv_tally_2> <!-- Define PV LED 2 as GPIO 4 -->
-        <pgm_tally_2>17</pgm_tally_2> <!-- Define PGM LED 2 as GPIO 17 -->
-	<pv_tally_3>18</pv_tally_3> <!-- Define PV LED 3 as GPIO 18 -->
-        <pgm_tally_3>27</pgm_tally_3> <!-- Define PGM LED 3 as GPIO 27 -->
-	<pv_tally_4>22</pv_tally_4> <!-- Define PV LED 4 as GPIO 22 -->
-        <pgm_tally_4>23</pgm_tally_4> <!-- Define PGM LED 4 as GPIO 23 -->
+	<pass/> <!-- OBS Websocket Password -->
+	<scene1>HDMI1</scene1> <!-- Scene-Name for Tally 1 -->
+	<scene2>HDMI2</scene2> <!-- Scene-Name for Tally 2 -->
+	<scene3>HDMI3</scene3> <!-- Scene-Name for Tally 3 -->
+	<scene4>HDMI4</scene4> <!-- Scene-Name for Tally 4 -->
+        <pv_tally_1>10</pv_tally_1> <!-- Define PV LED 1 as GPIO 2 -->
+	<pgm_tally_1>9</pgm_tally_1> <!-- Define PGM LED 1 as GPIO 3 -->
+        <pv_tally_2>22</pv_tally_2> <!-- Define PV LED 2 as GPIO 4 -->
+        <pgm_tally_2>23</pgm_tally_2> <!-- Define PGM LED 2 as GPIO 17 -->
+	<pv_tally_3>24</pv_tally_3> <!-- Define PV LED 3 as GPIO 18 -->
+        <pgm_tally_3>3</pgm_tally_3> <!-- Define PGM LED 3 as GPIO 27 -->
+	<pv_tally_4>17</pv_tally_4> <!-- Define PV LED 4 as GPIO 22 -->
+        <pgm_tally_4>4</pgm_tally_4> <!-- Define PGM LED 4 as GPIO 23 -->
 </data>
